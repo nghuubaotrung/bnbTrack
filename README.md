@@ -7,6 +7,13 @@ Income balance tracking tool with Meteor + MongoDB
 * Mongo DB 3.0.7
 
 ### Setup
+* Installing Meteor
+
+```
+   curl https://install.meteor.com/ | sh
+   sudo -H npm install -g meteorite
+```
+
 * Router setting
 
 ```
