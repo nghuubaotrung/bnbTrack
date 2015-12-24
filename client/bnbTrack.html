@@ -3,19 +3,7 @@
 </head>
 
 <body>
-
   {{>menu}}
-  <div class="container-fluid">
-    <div class="row-fluid">
-
-    </div>
-  </div>
-
-
-  <div class="content">
-    {{>calendar}}
-  </div>
-
 </body>
 
 <template name="calendar">
@@ -58,4 +46,27 @@
 		</div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+</template>
+
+
+
+<template name="layout">
+  <div class="container">
+    {{> yield}}
+  </div>
+</template>
+
+
+<template name="notFound">
+  <h1>404 404 404!</h1>
+</template>
+
+<template name="teamReport">
+  <h1>Monthy Report</h1>
+  <h1>Daily Report</h1>
+</template>
+
+<template name="memberReport">
+  <h1>Member List</h1>
+  <h1>Income Report</h1>
 </template>

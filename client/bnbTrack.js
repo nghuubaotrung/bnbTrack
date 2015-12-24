@@ -76,18 +76,62 @@ Template.calendar.rendered = function(){
 			calEvents.forEach(function(evt){
 				events.push({	id:evt._id,title:evt.title,start:evt.start,end:evt.end});
 			})
-			
+
 			// Callback to pass events back to the calendar
 			callback(events);
 		},
 		editable:true
 	});
 }
+
 var removeCalEvent = function(id,title){
 	CalEvents.remove({_id:id});
 	updateCalendar();
- } 
+}
+
 var updateCalEvent = function(id,title){
 	CalEvents.update(id, {$set: {title:title}});
 	updateCalendar();
- }
+}
+
+if (Meteor.isClient) {
+
+  Router.configure({
+      // templateの名前を設定します
+      layoutTemplate: 'layout',
+      notFoundTemplate: 'notFound'
+  });
+
+  // Controllerになります
+  var teamReportController = RouteController.extend({
+      template: 'teamReport'
+  });
+
+  var memberReportController = RouteController.extend({
+      template: 'memberReport'
+  });
+
+  var homeController = RouteController.extend({
+      template: 'calendar'
+  });
+
+  Router.map(function() {
+
+    this.route('teamReport', { // templateの名前になります
+        path: '/teamReport', // URLパスになります
+        controller: teamReportController // Controllerを渡します
+    });
+
+    this.route('memberReport', {
+        path: '/memberReport',
+        controller: memberReportController
+    });
+
+    this.route('calendar', {
+        path: '/',
+        controller: homeController
+    });
+
+  });
+
+}
