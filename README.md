@@ -18,6 +18,7 @@ Income balance tracking tool with Meteor + MongoDB
 
 ```
     mrt add router
+    meteor add iron:router
 ```
 
 * Adding fullcalendar package
