@@ -2,6 +2,7 @@
 
 // Set session defaults
 Session.setDefault('editing_calevent', null);
+// Session.setDefault('editing_calevent_name', null);
 Session.setDefault('showEditEvent', false);
 
 Template.calendar.showEditEvent = function(){
@@ -11,6 +12,7 @@ Template.calendar.showEditEvent = function(){
 Template.editEvent.evt = function(){
 	// run a query to the database
 	var calEvent = CalEvents.findOne({_id:Session.get('editing_calevent')});
+	// var calEvent = CalEvents.findOne({_id:Session.get('editing_calevent_name')});
 	return calEvent;
 }
 
@@ -21,18 +23,27 @@ var updateCalendar = function(){
 // If something with a class of .save in the editEvent template is clicked, run this function
 Template.editEvent.events({
 	'click .save':function(evt,tmpl){
-		updateCalEvent(Session.get('editing_calevent'),tmpl.find('.title').value);
-		Session.set('editing_calevent',null);
+		// saving item deta into session?
+		// updateCalEvent(Session.get('editing_calevent'),tmpl.find('.title').value);
+		// updateCalEvent(Session.get('editing_calevent_booking_id'),tmpl.find('.booking_id').value);
+		updateCalEvent(Session.get('editing_calevent'),tmpl.find('.name').value);
+		// updateCalEvent(Session.get('editing_calevent_contact'),tmpl.find('.contact').value);
+		// Session.set('editing_calevent_title',null);
+		// Session.set('editing_calevent_booking_id',null);
+		Session.set('editing_calevent_name',null);
+		// Session.set('editing_calevent_contact',null);
 		Session.set('showEditEvent',false);
 		},
 	'click .close':function(evt,tmpl){
 		Session.set('editing_calevent',null);
+		// Session.set('editing_calevent_name',null);
 		Session.set('showEditEvent',false);
 		$('#EditEventModal').modal("hide");
 	}	,
 	'click .remove':function(evt,tmpl){
-		removeCalEvent(Session.get('editing_calevent'));
+		removeCalEvent(Session.get('editing_calevent_name'));
 		Session.set('editing_calevent',null);
+		// Session.set('editing_calevent_name',null);
 		Session.set('showEditEvent',false);
 		$('#EditEventModal').modal("hide");
 	}
@@ -50,15 +61,20 @@ Template.calendar.rendered = function(){
 		// Event triggered when someone clicks on a day in the calendar
 		dayClick:function( date, allDay, jsEvent, view) {
 			// Insert the day someone's clicked on
-			CalEvents.insert({title:'New Item',start:date,end:date});
+			CalEvents.insert({title:'New Booking',start:date,end:date});
 			// Refreshes the calendar
 			updateCalendar();
 		},
 		eventClick:function(calEvent,jsEvent,view){
 			// Set the editing_calevent variable to equal the calEvent.id
 			Session.set('editing_calevent',calEvent.id);
+			// Session.set('editing_calevent_name',calEvent.id);
 			// Set the showEditEvent variable to true
 			Session.set('showEditEvent', true);
+
+
+
+
 			//Trigger the modal bootstrap 3 box as defined in the calendar.html page
 			$('#EditEventModal').modal("show");
 		},
@@ -74,6 +90,7 @@ Template.calendar.rendered = function(){
 			calEvents = CalEvents.find();
 			// Do a for each loop and add what you find to events array
 			calEvents.forEach(function(evt){
+				// events.push({	id:evt._id,title:evt.title,start:evt.start,end:evt.end});
 				events.push({	id:evt._id,title:evt.title,start:evt.start,end:evt.end});
 			})
 
